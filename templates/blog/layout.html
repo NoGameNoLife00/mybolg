@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+	<!--  Page Needs -->
+	<meta charset="utf-8">
+	<title>NoGameNoLife的博客</title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+	
+	<!-- Mobile Specific Meta -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="/static/css/zerogrid.css">
+	<link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/responsive.css">
+
+    <!--[if lt IE 8]>
+       <div style=' clear: both; text-align:center; position: relative;'>
+         <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+           <img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today." />
+        </a>
+      </div>
+    <![endif]-->
+    <!--[if lt IE 9]>
+		<script src="/static/js/html5.js"></script>
+		<script src="/static/js/css3-mediaqueries.js"></script>
+	<![endif]-->
+</head>
+<body>
+	<div class="wrap-body">
+	<!-- Header -->
+	<header>
+		<div class="wrap-header zerogrid">
+			<div id="logo"><a href="{{ url_for('show_blog') }}"><img src="/static/images/newlogo.png"/></a></div>
+			<nav>
+				<div class="wrap-nav">
+					<div class="menu">
+						<ul>
+							<li><a href="{{ url_for('show_blog') }}">首页</a></li>
+							<li><a href="blog.html">分类</a></li>
+							<li><a href="blog.html">留言</a></li>
+							<li><a href="blog.html">关于</a></li>
+							<li><a href="#">Contact</a></li>
+                            {% if g.user.is_authenticated() %}
+                            <li><a href="{{ url_for('logout') }}">登出</a></li>
+                            {% endif %}
+
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</div>
+	</header>
+<!-- Content -->
+{% with message = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }} </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+
+{% block body %} {% endblock %}
+{% block content %} {% endblock %}
+
+
+<!-- Footer -->
+<footer>
+	<div class="wrap-footer zerogrid">
+		<div class="row">
+			<div class="col-1-3">
+				<div class="wrap-col">
+					<div class="box">
+						<div class="heading"><h4 class="title">Image Gallery</h4></div>
+						<div class="content gallery">
+							<!-- <a href="#"><img src="images/img5.jpg" width="120"/></a><a href="#"><img src="images/img4.jpg" width="120"/></a><a href="#"><img src="images/img3.jpg" width="120"/></a><a href="#"><img src="images/img2.jpg" width="120"/></a><a href="#"><img src="images/img1.jpg" width="120"/></a><a href="#"><img src="images/img4.jpg" width="120"/></a> -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-1-3">
+				<div class="wrap-col">
+					<div class="box">
+						<div class="heading"><h4 class="title">About Us</h4></div>
+						<div class="content">
+							<!-- <a href="#" target="_blank"><img src="images/zerotheme.png" style="border: 0px; margin: 10px 0;"/></a> -->
+							<!-- <p><a href="#" target="_blank">Free Html5 Templates</a> created by <a href="#">Zerotheme</a>. You can use and modify the template for both personal and commercial use. You must keep all copyright information and credit links in the template and associated files.</p> -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-1-3">
+				<div class="wrap-col">
+					<div class="box">
+						<div class="heading"><h4 class="title">Contact Us</h4></div>
+						<div class="content">
+							<!-- <p>Praesent dapibus, neque id cursus faucibus, tortor neque egestas.</p> -->
+							<!-- <p>Website : <a href="#" target="_blank">www.</a></p> -->
+							<!-- <p>+1 (123) 444-5677 <br/> +1 (123) 444-5678</p> -->
+							<!-- <p>Address: 123 TemplateAccess Rd1</p> -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="copyright">
+		<!-- <p>Copyright © 2012 - More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> </p> -->
+	</div>
+</footer>
+
+</div>
+</body></html>
