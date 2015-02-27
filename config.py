@@ -10,7 +10,7 @@ OPENID_PROVIDERS = [
     {'name': 'Flickr', 'url': 'http://www.flickr.com/<username>' },
     {'name': 'MyOpenID', 'url': 'https://www.myopenid.com' }
 ]
-
+POST_PRE_PAGE = 8
 # MYSQL Setting
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -24,3 +24,12 @@ SQLALCHEMY_DATABASE_URI = 'mysql://%s:%s@%s:%s/%s' \
                           % (MYSQL_USER, MYSQL_PASSWORD,
                              MYSQL_HOST, MYSQL_PORT, MYSQL_DB)
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
+
+#email server settings
+MAIL_SERVER = 'localhost'
+MAIL_PORT = 25
+MAIL_USERNAME = None
+MAIL_PASSWORD = None
+
+#administrator list
+ADMINS = ['NoGameNo_Life@163.com']

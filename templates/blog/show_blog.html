@@ -1,0 +1,63 @@
+{% extends "blog/layout.html" %}
+{% block body %}
+<section id="content">
+	<div class="wrap-content zerogrid">
+		<div class="row block">
+			<div id="main-content" class="col-2-3">
+				<div class="row">
+					<div class="col-full">
+						<div class="wrap-col">
+                            {% for entry in entries %}
+                                <article>
+                                    <div class="heading"><h2 class="title"><a href="#">{{ entry.title |safe }}</a></h2></div>
+                                    <img src="/static/images/img1.jpg"/>
+                                    <div class="content">
+                                            {{ entry.content|safe }}
+
+                                    </div>
+                                    <div class="extra">
+                                        <div class="info">By Admin on December 01, 2012 - <a href="#">01 Commnets</a></div>
+                                        <div class="more"><a class="button" href="#">Read more >></a></div>
+                                        <div class="clear"></div>
+                                    </div>
+                                </article>
+                            {% endfor %}
+                            <nav>
+                                <ul class="pagination">
+                                    {% if p.has_prev %}
+                                        <li><a href="{{ url_for('show_blog', page=p.prev_num) }}" aria-label="Previous"><span aria-hidden="true">上一页</span></a></li>
+                                    {% else %}
+                                        <li><a href="#">上一页</a></li>
+                                    {% endif %}
+
+                                    {% for i in pagination %}
+                                        {% if i == page %}
+                                            <li class="active"><a href="#">{{ i }}<span class="sr-only">(current)</span></a></li>
+                                        {% else %}
+                                            <li><a href="{{ url_for('show_blog', page=i) }}"> {{ i }}</a></li>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                    {% if p.has_next %}
+                                        <li><a href="{{ url_for('show_blog', page=p.next_num) }}" aria-hidden="next"><span aria-hidden="true">下一页</span>
+                                    {% else %}
+                                        <li><a href="#">下一页</a></li>
+                                    {% endif %}
+                                   </a></li>
+                                </ul>
+                            </nav>
+						</div>
+					</div>
+				</div>
+				</div>
+			</div>
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+{% endblock %}
