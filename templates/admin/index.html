@@ -1,13 +1,13 @@
-{% extendes 'admin/master.html' %}
+{% extends 'admin/master.html' %}
 {% block body %}
-{{ super() }}
+<!--{{ super() }}-->
 <div class="row">
     <div class="span10 offset1">
         <h1>NoGameNoLife的blog后台</h1>
         <h1>基本功能</h1>
             <p>1.博文管理：添加,修改,删除文章</p>
             <p>2....</p>>
-
+            <p><a href="{{ url_for('admin_create_entry') }}">创建新的文章</a></p>
     </div>
 </div>
 {% endblock %}

@@ -1,5 +1,7 @@
 {% extends "blog/layout.html" %}
 {% block body %}
+
+
 <section id="content">
 	<div class="wrap-content zerogrid">
 		<div class="row block">
@@ -10,7 +12,7 @@
                             {% for entry in entries %}
                                 <article>
                                     <div class="heading"><h2 class="title"><a href="#">{{ entry.title |safe }}</a></h2></div>
-                                    <img src="/static/images/img1.jpg"/>
+                                    <!--<img src="/static/images/img1.jpg"/>-->
                                     <div class="content">
                                             {{ entry.content|safe }}
 
@@ -49,15 +51,68 @@
 						</div>
 					</div>
 				</div>
-				</div>
 			</div>
-
-
+			<div id="sidebar" class="col-1-3">
+				<div class="wrap-col">
+					<div class="box">
+						<div class="heading"><h4 class="title">Connect Me</h4></div>
+						<div class="content">
+							<div class="connect">
+								<a href="#"><img src="static/images/socials/facebook-icon.png" title="facebook"/></a><a href="#"><img src="static/images/socials/google-plus-icon.png" title="google plus"/></a><a href="#"><img src="static/images/socials/twitter-icon.png" title="twitter" /></a><a href="#"><img src="static/images/socials/pinterest-icon.png" title="pin"/></a><a href="#"><img src="static/images/socials/rss-icon.png" title="rss"/></a>
+							</div>
+						</div>
+					</div>
+					<div class="box">
+						<div class="heading"><h4 class="title">文章分类</h4></div>
+						<div class="content">
+							<div class="post">
+								<img src="images/img2.jpg"/>
+								<h5 class="title"><a href="#">Lorem ipsum dolor sit amet</a></h5>
+							</div>
+							<div class="post last">
+								<img src="images/img4.jpg"/>
+								<h5 class="title"><a href="#">Lorem ipsum dolor sit amet</a></h5>
+							</div>
+						</div>
+					</div>
+					<div class="box">
+						<div class="heading"><h4 class="title">最新留言</h4></div>
+						<div class="content">
+							<ul>
+								<li><a href="#">Free Html5 Templates</a></li>
+								<li><a href="#">Free Responsive Themes</a></li>
+								<li><a href="#">Free Html5 and Css3 Themes</a></li>
+								<li><a href="#">Free Responsive Html5 and Css3 Themes</a></li>
+								<li><a href="#">Free Basic Responsive Html5 Css3 Layouts</a></li>
+								<li class="last"><a href="#">Premium Responsive Html5 Css3 Templates</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="box">
+						<div class="heading"><h4 class="title">友情链接</h4></div>
+						<div class="content">
+							<div class="post">
+								<img src="images/img1[thumb].jpg"/>
+								<h5 class="title"><a href="#">Lorem ipsum dolor sit amet</a></h5>
+								<p>November 11 ,2012</p>
+							</div>
+							<div class="post">
+								<img src="images/img3[thumb].jpg"/>
+								<h5 class="title"><a href="#">Lorem ipsum dolor sit amet</a></h5>
+								<p>November 11 ,2012</p>
+							</div>
+							<div class="post last">
+								<img src="images/img5[thumb].jpg"/>
+								<h5 class="title"><a href="#">Lorem ipsum dolor sit amet</a></h5>
+								<p>November 11 ,2012</p>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
+
 
 {% endblock %}

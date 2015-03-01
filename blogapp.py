@@ -1,6 +1,6 @@
-#coding=utf-8
+ #encoding=utf-8
 from flask import Flask
-# from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.sqlalchemy import SQLAlchemy
 # from flask.ext.login import LoginManager
 # from flask.ext.openid import OpenID
 # from config import basedir
@@ -8,7 +8,7 @@ from flask import Flask
 
 app = Flask(__name__)
 app.config.from_object('config')
-
+from admin import *
 #Login
 # lm = LoginManager()
 # lm.init_app(app)
@@ -44,4 +44,4 @@ from view import *
 from data_model import *
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port=5005)

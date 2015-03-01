@@ -1,4 +1,4 @@
-#coding=utf-8
+ #encoding=utf-8
 from datetime import datetime
 from flask.ext.sqlalchemy import SQLAlchemy
 from blogapp import app
@@ -15,26 +15,26 @@ class User(db.Model):
     nickname = db.Column(db.String(80), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     role = db.Column(db.SmallInteger, default=ROLE_USER)
-    entries = db.relationship('Entries', backref='author', lazy='dynamic')
+    entry = db.relationship('Entry', backref='author', lazy='dynamic')
     about_me = db.Column(db.String(250))
     last_seen = db.Column(db.DateTime)
 
-
-    def is_authenticated(self):
-    #   是否通过认证
-        return True
+    #
+    # def is_authenticated(self):
+    # #   是否通过认证
+    #     return True
 
     def is_active(self):
     #   是否有效
         return True
-    def is_anonymous(self):
-    #   是否匿名
-        return False
+    # def is_anonymous(self):
+    # #   是否匿名
+    #     return False
 
-    def avatar(self, size):
-    #   用户头像
-        return 'http://www.gravatar.com/avatar/' + \
-               md5(self.email).hexdigest() + '?d=mm&s=' + str(size)
+    # def avatar(self, size):
+    # #   用户头像
+    #     return 'http://www.gravatar.com/avatar/' + \
+    #            md5(self.email).hexdigest() + '?d=mm&s=' + str(size)
 
 
     def get_id(self):
@@ -62,17 +62,45 @@ class User(db.Model):
         return self.nickname
 
 
-class Entries(db.Model):
+class Category(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), unique=True)
+
+    def __repr__(self):
+        return '<Category %r>' % self.name
+
+    def __unicode__(self):
+        return self.name
+
+
+class Tag(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), unique=True)
+
+    def __repr__(self):
+        return '<Tag %r>' % self.name
+
+tags = db.Table('tags',
+                db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')),
+                db.Column('entry_id', db.Integer, db.ForeignKey('entry.id'))
+                )
+
+
+class Entry(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100))
     content = db.Column(db.Text)
-    status = db.Column(db.Integer) #完成：1, 失败0, 草稿:-1
-    create_time = db.Column(db.DateTime)
-    modified_time = db.Column(db.DateTime)
+    status = db.Column(db.Integer, default=1) #完成：1, 失败0, 草稿:-1
+    create_time = db.Column(db.DateTime, default=datetime.now())
+    modified_time = db.Column(db.DateTime, default=datetime.now())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    category = db.relationship('Category', backref=db.backref('entries', lazy='dynamic'), lazy='select')
+    category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
+    tag = db.relationship('Tag', secondary=tags, backref=db.backref('entries', lazy='dynamic'))
+    view_count = db.Column(db.Integer, default=0)
 
     def __repr__(self):
-        return '<Entries %r>' % self.title
+        return '<Entry %r>' % self.title
 
     def __unicode__(self):
         return self.title
