@@ -1,0 +1,39 @@
+{% extends "blog/layout.html" %}
+{% block body %}
+
+<ol class="breadcrumb" xmlns="http://www.w3.org/1999/html">
+    <li><a href="{{ url_for('show_blog') }}">首页</a> </li>
+    <li><a href="{{ url_for('show_about') }}">关于</a> </li>
+</ol>
+
+<div class="panel panel-default">
+    <div class="page-header">
+        <h2>关于我</h2>
+    </div>
+
+    <ul class="media-list">
+    <li class="media">
+        <div class="media-left">
+        <a class="pull-left" href="#">
+           <img class="media-object" src="/static/images/about.png" alt="">
+        </a>
+        <div class="media-body">
+           <div class="caption">
+               <h3 class="media-heading" style="text-align:center; text-transform:none;">NoGameNoLife</h3>
+               <p>
+                    <p>一个普通到不能再普通的在校大学生一名。喜欢写代码，目标是成为一个技术宅。</p>
+                    <p>写这个blog到目的只是想记录下自己到学习脚步，顺便分享在学习到过程中到感悟。。  </p>
+               </p>
+           </div>
+
+        </div>
+        </div>
+    </li>
+    </ul>
+
+<br>
+<p>联系方式:</p>
+<p>website: <a href="http://weibo.com/NoGameNoLife00">新浪微博</a></p>
+<p>E-mail: NoGameNo_Life@163.com</p>
+</div>
+{% endblock %}

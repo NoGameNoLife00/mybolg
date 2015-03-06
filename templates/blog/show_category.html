@@ -1,0 +1,25 @@
+{% extends "blog/layout.html" %}
+{% block body %}
+<ol class="breadcrumb">
+    <li><a href="{{ url_for('show_blog') }}">首页</a> </li>
+    <li><a href="{{ url_for('show_categories') }}">分类</a> </li>
+    <li><a href="{{ url_for('show_category', category_id=category.id) }}">{{ category.name }}</a> </li>
+</ol>
+
+{% for entry in category.entries %}
+    <article>
+        <div class="heading"><h2 class="title"><a href="#">{{ entry.title |safe }}</a></h2></div>
+        <!--<img src="/static/images/img1.jpg"/>-->
+        <div class="content">
+                {{ entry.content|safe }}
+
+        </div>
+        <div class="extra">
+            <div class="info">By Admin on {{ entry.create_time.strftime("%Y-%m-%d") }} - <a href="#">01 Commnets</a></div>
+            <div class="more"><a class="button" href="#">Read more >></a></div>
+            <div class="clear"></div>
+        </div>
+    </article>
+{% endfor %}
+
+{% endblock %}

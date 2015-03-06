@@ -18,12 +18,13 @@ MYSQL_HOST = 'localhost'
 MYSQL_PORT = '3306'
 MYSQL_USER = 'root'
 MYSQL_PASSWORD = '110244'
-MYSQL_DB = 'blogapp'
+MYSQL_DB = 'app_bugcoding'
 
 SQLALCHEMY_DATABASE_URI = 'mysql://%s:%s@%s:%s/%s' \
                           % (MYSQL_USER, MYSQL_PASSWORD,
                              MYSQL_HOST, MYSQL_PORT, MYSQL_DB)
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
+SQLALCHEMY_POOL_RECYCLE = 5
 
 #email server settings
 MAIL_SERVER = 'localhost'

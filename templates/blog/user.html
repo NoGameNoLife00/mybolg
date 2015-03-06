@@ -1,0 +1,27 @@
+<!--extend base layout-->
+{% extends 'blog/layout.html'%}
+
+{% block content %}
+<table>
+    <tr valign="top">
+        <td><img src="{{ user.avatar(128) }}"></td>
+        <td>
+            <h1>User: {{ user.nickname }}</h1></td>
+            {% if user.about_me %} <p>{{ user.about_me }}</p>
+            {% endif %}
+            {% if user.last_seen %} <p><i>Last seen on: {{user.last_seen }}</i></p>
+            {% endif %}
+            {% if user.id == g.user.id %} <p><a href="{{ url_for('edit') }}">edit</a> </p>
+            {% endif %}
+    </tr>
+</table>
+<hr>
+{% for entry in entries %}
+<p>
+    {{ entry.author.nickname }} 发布了： <b>{{ entry.content}}</b>
+</p>
+{% endfor %}
+
+{% endblock %}
+
+

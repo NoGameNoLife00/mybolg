@@ -1,0 +1,27 @@
+{% extends 'blog/layout.html' %}
+
+{% block content %}
+<h1>Edit Your Profile</h1>
+<form action="" method="post" name="edit">
+    {{ form.hidden_tag() }}
+    <table>
+        <tr>
+            <td>Your nickname:</td>
+            <td>
+                {{ form.nickname(size=24) }}
+                {% for error in form.errors.nickname %}
+                <br><span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <td>About youself:</td>
+            <td>{{ form.about_me(cols=32, rows=4) }}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Save Changes"></td>
+        </tr>
+    </table>
+</form>
+{% endblock %}

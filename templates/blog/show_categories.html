@@ -1,0 +1,23 @@
+{% extends "blog/layout.html" %}
+{% block body %}
+
+<ol class="breadcrumb">
+    <li><a href="{{ url_for('show_blog') }}">首页</a> </li>
+    <li><a href="{{ url_for('show_categories') }}">分类</a> </li>
+</ol>
+
+{% for category in categories %}
+    <div class="last-group"><a href="#" class="list-group-item active"><h3 class="list-group-item-heading" style="text-align:center">{{ category.name }}</h3></a>
+    <!--<h1><span class="label label-success">{{ category.name }}</span></h1>-->
+        {% for entry in category.entries[:5] %}
+            <a href="#" class="list-group-item"><h4 class="list-group-item-heading">{{ entry.title }}</h4>
+            <p class="list-group-item-text">on {{ entry.create_time.strftime("%y-%m-%d") }}</p></a>
+        {% endfor %}
+
+        <p><a class="btn btn-primary btn-lg" href="{{ url_for('show_category', category_id=category.id) }}" role="button">查看更多</a></p>
+    </div>
+
+{% endfor %}
+
+
+{% endblock %}

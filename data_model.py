@@ -80,7 +80,7 @@ class Tag(db.Model):
     def __repr__(self):
         return '<Tag %r>' % self.name
 
-tags = db.Table('tags',
+tag_entry = db.Table('tags',
                 db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')),
                 db.Column('entry_id', db.Integer, db.ForeignKey('entry.id'))
                 )
@@ -96,7 +96,7 @@ class Entry(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     category = db.relationship('Category', backref=db.backref('entries', lazy='dynamic'), lazy='select')
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
-    tag = db.relationship('Tag', secondary=tags, backref=db.backref('entries', lazy='dynamic'))
+    tag = db.relationship('Tag', secondary=tag_entry, backref=db.backref('entries', lazy='dynamic'))
     view_count = db.Column(db.Integer, default=0)
 
     def __repr__(self):

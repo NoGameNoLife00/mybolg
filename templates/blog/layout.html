@@ -39,16 +39,15 @@
 	<!-- Header -->
 	<header>
 		<div class="wrap-header zerogrid">
-			<div id="logo"><a href="{{ url_for('show_blog') }}"><img src="/static/images/newlogo.png"/></a></div>
+			<div id="logo"><a href="{{ url_for('show_blog') }}"><img src="/static/images/newlogo2.png"/></a></div>
 			<nav>
 				<div class="wrap-nav">
 					<div class="menu">
 						<ul>
 							<li><a href="{{ url_for('show_blog') }}">首页</a></li>
-							<li><a href="blog.html">分类</a></li>
-							<li><a href="blog.html">留言</a></li>
-							<li><a href="blog.html">关于</a></li>
-							<li><a href="#">Contact</a></li>
+							<li><a href="{{ url_for('show_categories') }}">分类</a></li>
+							<li><a href="{{ url_for('show_comment') }}">留言</a></li>
+							<li><a href="{{ url_for('show_about') }}">关于</a></li>
 						</ul>
 					</div>
 				</div>
@@ -66,9 +65,67 @@
         <!--{% endif %}-->
         <!--{% endwith %}-->
 
-{% block body %} {% endblock %}
-{% block content %} {% endblock %}
 
+<section id="content">
+	<div class="wrap-content zerogrid">
+		<div class="row block">
+			<div id="main-content" class="col-2-3">
+				<div class="row">
+					<div class="col-full">
+						<div class="wrap-col">
+                            {% block body %} {% endblock %}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="sidebar" class="col-1-3">
+				<div class="wrap-col">
+					<div class="box">
+						<div class="heading"><h4 class="title">About Me</h4></div>
+						<div class="content">
+							<div class="connect">
+                                <div class="thumbnail">
+                                    <img src="/static/images/myhead.png" alt="'">
+                                    <div class="caption">
+                                        <div style="text-align:center;"><h4 style="text-transform:none;">NoGameNoLife</h4></div>
+                                        <p>&nbsp; &nbsp;一名普通到不能再普通到大学生。喜欢编程，喜欢动漫的死宅，目标成为一名技术宅..... </p>
+                                    </div>
+                                </div>
+							</div>
+						</div>
+					</div>
+					<div class="box">
+						<div class="heading"><h4 class="title">标签</h4></div>
+						<ul class="nav nav-pills">
+                            {%  for tag in tags %}
+                                <li role="presentation"><a href="#">{{ tag.name|safe }}</a> </li>
+                            {% endfor %}
+                        </ul>
+					</div>
+
+                    <div class="box">
+						<div class="heading"><h4 class="title">最新评论</h4></div>
+						<div class="content">
+                                    <!-- 多说最新评论 start -->
+                        <div class="ds-recent-comments" data-num-items="5" data-show-avatars="1" data-show-time="1" data-show-title="1" data-show-admin="1" data-excerpt-length="70"></div>
+                                <!-- 多说最新评论 end -->
+
+                        </div>
+                    </div>
+                    <div class="box">
+						<div class="heading"><h4 class="title">最近访客</h4></div>
+						<div class="content">
+                            <!-- 多说热评文章 start -->
+                            <ul class="ds-recent-visitors"></ul>
+                            <!-- 多说热评文章 end -->
+						</div>
+					</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+</section>
 
 <!-- Footer -->
 <footer>
@@ -77,8 +134,11 @@
 			<div class="col-1-3">
 				<div class="wrap-col">
 					<div class="box">
-						<div class="heading"><h4 class="title">Image Gallery</h4></div>
+						<div class="heading"><h4 class="title">联系信息</h4></div>
 						<div class="content gallery">
+                            <p>website: <a href="http://weibo.com/NoGameNoLife00">新浪微博</a></p>
+                            <p>E-mail: NoGameNo_Life@163.com</p>
+                            <p></p>
 							<!-- <a href="#"><img src="images/img5.jpg" width="120"/></a><a href="#"><img src="images/img4.jpg" width="120"/></a><a href="#"><img src="images/img3.jpg" width="120"/></a><a href="#"><img src="images/img2.jpg" width="120"/></a><a href="#"><img src="images/img1.jpg" width="120"/></a><a href="#"><img src="images/img4.jpg" width="120"/></a> -->
 						</div>
 					</div>
@@ -98,12 +158,9 @@
 			<div class="col-1-3">
 				<div class="wrap-col">
 					<div class="box">
-						<div class="heading"><h4 class="title">Contact Us</h4></div>
+						<div class="heading"><h4 class="title">友情链接</h4></div>
 						<div class="content">
-							<!-- <p>Praesent dapibus, neque id cursus faucibus, tortor neque egestas.</p> -->
-							<!-- <p>Website : <a href="#" target="_blank">www.</a></p> -->
-							<!-- <p>+1 (123) 444-5677 <br/> +1 (123) 444-5678</p> -->
-							<!-- <p>Address: 123 TemplateAccess Rd1</p> -->
+
 						</div>
 					</div>
 				</div>
@@ -111,7 +168,8 @@
 		</div>
 	</div>
 	<div class="copyright">
-		<!-- <p>Copyright © 2012 - More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> </p> -->
+        <p>Copyright © 2012 - 2015 by NoGameNoLife's blog </p>
+		 <!--<p >Copyright © 2012 - More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a></p>-->
 	</div>
 </footer>
 
@@ -119,6 +177,19 @@
 <!--JavaScript-->
 <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"nogamenolife"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+<!-- 多说公共JS代码 end -->
 
 </body>
 </html>

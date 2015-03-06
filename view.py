@@ -4,19 +4,31 @@ from flask import render_template, flash, redirect, session, url_for, request, m
 # from flask.ext.login import login_user, logout_user, current_user, login_required
 from data_wrappers import DataWrappers
 from data_model import *
-from blogapp import app #lm, oid
+from blogapp import app
+# from doushuo import DoushuoAPI
+
 # from forms import LoginForm, EditForm
 from config import POST_PRE_PAGE
 from uploader import Uploader
 import os
 import json
 import re
+
 date = DataWrappers()
 
+def global_map():
+    tags = date.get_all_tags()
+    user = User.query.filter().first()
+    map = {
+         'tags': tags,
+         'user': user,
+    }
+    return map
 
 @app.before_request
 def befor_request():
     pass
+
 
 
 @app.route('/')
@@ -36,8 +48,41 @@ def show_blog(page=1):
         pagination = range(1, p.total/POST_PRE_PAGE + 1)
 
     return render_template('/blog/show_blog.html', entries=entries,
-                           p=p, page=page, pagination=pagination)
+                           p=p, page=page, pagination=pagination,
+                            **global_map())
 
+
+@app.route('/category')
+def show_categories():
+    categories = date.get_all_categories()
+    return render_template('blog/show_categories.html', categories=categories,
+                            **global_map())
+
+@app.route('/category/<int:category_id>')
+def show_category(category_id):
+    category = date.get_category_by_id(category_id)
+
+    return render_template('/blog/show_category.html', category=category,
+                           **global_map())
+
+
+@app.route('/entry/<int:entry_id>')
+def show_entry(entry_id):
+    entry = date.get_entry_by_id(id=entry_id)
+    return render_template('/blog/show_entry.html', entry=entry,
+                           **global_map())
+
+@app.route('/comment')
+def show_comment():
+
+    return render_template('blog/show_comment.html',
+                           **global_map())
+
+@app.route('/about')
+def show_about():
+
+    return render_template('blog/show_about.html',
+                           **global_map())
 
 #表单视图
 # @app.route('/login', methods = ['GET', 'POST'])

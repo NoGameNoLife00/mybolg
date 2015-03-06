@@ -1,10 +1,21 @@
  #encoding=utf-8
+
+import os
+import sys
+absolute_path = os.path.abspath(__file__)
+app_path = os.path.dirname(absolute_path)
+path = os.path.join(app_path, 'virtualenv.bundle')
+sys.path.insert(0, path)
+sys.path.insert(0, app_path)
+
+
 from flask import Flask
-from flask.ext.sqlalchemy import SQLAlchemy
+#from flask.ext.sqlalchemy import SQLAlchemy
 # from flask.ext.login import LoginManager
 # from flask.ext.openid import OpenID
 # from config import basedir
-# import os
+
+
 
 app = Flask(__name__)
 app.config.from_object('config')
@@ -44,4 +55,5 @@ from view import *
 from data_model import *
 
 if __name__ == '__main__':
+    db.create_all()
     app.run(host='0.0.0.0', port=5005)
