@@ -1,0 +1,32 @@
+{% extends "blog/layout.html" %}
+{% block body %}
+
+{% block head %}
+	<title>{{ tag.name }} |NoGameNoLife的博客</title>
+	<meta name="description" content="{{ tag.name }},NoGameNoLife的博客">
+	<meta name="author" content="NoGameNoLife">
+	<meta name="keywords" content="{{ tag.name }}}">
+{% endblock %}
+
+<ol class="breadcrumb">
+    <li><a href="{{ url_for('show_blog') }}">首页</a> </li>
+    <li><a href="{{ url_for('show_tag', tag_id=tag.id) }}">{{ tag.name }}</a> </li>
+</ol>
+
+{% for entry in tag.entries %}
+    <article>
+        <div class="heading"><h2 class="title"><a href="{{ url_for('show_entry', entry_id=entry.id) }}">{{ entry.title |safe }}</a></h2></div>
+        <!--<img src="/static/images/img1.jpg"/>-->
+        <div class="content">
+                {{ (entry.fragment)|safe }}...
+
+        </div>
+        <div class="extra">
+            <div class="info">By Admin on {{ entry.create_time.strftime("%Y-%m-%d") }} - <a href="#">01 Commnets</a></div>
+            <div class="more"><a class="button" href="{{ url_for('show_entry', entry_id=entry.id) }}">Read more >></a></div>
+            <div class="clear"></div>
+        </div>
+    </article>
+{% endfor %}
+
+{% endblock %}

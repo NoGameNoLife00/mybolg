@@ -1,0 +1,19 @@
+name: bugcoding
+version: 1
+
+libraries:
+- name: flask
+  version: "0.10.1"
+
+- name: flask-sqlalchemy
+  version: "2.0"
+
+- name: sqlalchemy
+  version: "0.9.8"
+
+- name: jinja2
+  version: "2.7.3"
+
+- name: wtforms
+  version: "2.0.2"
+
