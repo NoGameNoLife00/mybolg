@@ -1,4 +1,12 @@
 {% extends "blog/layout.html" %}
+{% block head %}
+	<title>NoGameNoLife的博客</title>
+	<meta name="description" content="NoGameNoLife的博客, C/C++,C#,Python,web,算法">
+	<meta name="author" content="NoGameNoLife">
+	<meta name="keywords" content="个人blog,C/C++,C#,Python,web,算法">
+{% endblock %}
+
+
 {% block body %}
 
 {% for entry in entries %}
@@ -6,13 +14,19 @@
         <div class="heading"><h2 class="title"><a href="{{ url_for('show_entry', entry_id=entry.id) }}">{{ entry.title |safe }}</a></h2></div>
         <!--<img src="/static/images/img1.jpg"/>-->
         <div class="content">
-                {{ entry.content|safe }}
+                {{ (entry.fragment)|safe }}...
 
         </div>
         <div class="extra">
 
-            <div class="info">By Admin on {{ entry.create_time.strftime("%Y-%m-%d") }} - <a href="#"><span class="ds-thread-count" data-thread-key="{{ entry.id }}" data-count-type="comments"></span></a></div>
+            <div class="info">
+                By Admin on {{ entry.create_time.strftime("%Y-%m-%d") }} -
+                <a href="{{ url_for('show_entry', entry_id=entry.id) }}">
+                    <span class="ds-thread-count" data-thread-key="{{ entry.id }}" data-count-type="comments"></span>
+                </a>
+            </div>
             <div class="more"><a class="button" href="{{ url_for('show_entry', entry_id=entry.id) }}">Read more >></a></div>
+
             <div class="clear"></div>
         </div>
     </article>

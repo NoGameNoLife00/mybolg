@@ -1,4 +1,12 @@
 {% extends "blog/layout.html" %}
+
+{% block head %}
+	<title>{{ entry.title }} |NoGameNoLife的博客</title>
+	<meta name="description" content="{{ entry.title }},NoGameNoLife的博客">
+	<meta name="author" content="NoGameNoLife">
+	<meta name="keywords" content="{{ entry.title }}, {{ entry.category.name }}">
+{% endblock %}
+
 {% block body %}
 <ol class="breadcrumb">
     <li><a href="{{ url_for('show_blog') }}">首页</a> </li>
@@ -11,15 +19,22 @@
 
 </ol>
 <div class="well well-lg">
-    <p>{{ entry.content }}</p>
+    <p>{{ entry.content|safe}}</p>
 </div>
 
+<nav>
+  <ul class="pager">
+    <li class="previous"><a href="{{ url_for('prev_entry', entry_id=entry.id) }}"><span aria-hidden="true">&larr;</span> 上一篇</a></li>
+    <li class="next"><a href="{{ url_for('next_entry', entry_id=entry.id) }}">下一篇 <span aria-hidden="true">&rarr;</span></a></li>
+  </ul>
+</nav>
+
 <!-- 多说评论框 start -->
-<div class="ds-thread" data-thread-key="{{ entry.id }}" data-title="{{ entry.title }}" data-url="{{ url_for('show_entry', entry_id=entry.id)}}">
+<div class="ds-thread" data-thread-key="{{ entry.id }}" data-title="{{ entry.title }}" data-url="http://bugcoding.sinaapp.com/entry/{{entry.id}}">
 
 </div>
 <!-- 多说评论框 end -->
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+
 <script type="text/javascript">
 var duoshuoQuery = {short_name:"nogamenolife"};
 	(function() {
@@ -30,6 +45,8 @@ var duoshuoQuery = {short_name:"nogamenolife"};
 		(document.getElementsByTagName('head')[0]
 		 || document.getElementsByTagName('body')[0]).appendChild(ds);
 	})();
+
+
 	</script>
-<!-- 多说公共JS代码 end -->
+
 {% endblock %}

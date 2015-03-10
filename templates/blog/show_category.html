@@ -1,4 +1,13 @@
 {% extends "blog/layout.html" %}
+
+{% block head %}
+	<title>{{ category.name }} |NoGameNoLife的博客</title>
+	<meta name="description" content="NoGameNoLife的博客, C/C++,C#,Python,web,算法">
+	<meta name="author" content="NoGameNoLife">
+	<meta name="keywords" content="{{ category.name }}">
+{% endblock %}
+
+
 {% block body %}
 <ol class="breadcrumb">
     <li><a href="{{ url_for('show_blog') }}">首页</a> </li>
@@ -6,17 +15,22 @@
     <li><a href="{{ url_for('show_category', category_id=category.id) }}">{{ category.name }}</a> </li>
 </ol>
 
-{% for entry in category.entries %}
+{% for entry in category.entries%}
     <article>
-        <div class="heading"><h2 class="title"><a href="#">{{ entry.title |safe }}</a></h2></div>
+        <div class="heading"><h2 class="title"><a href="{{ url_for('show_entry', entry_id=entry.id) }}">{{ entry.title |safe }}</a></h2></div>
         <!--<img src="/static/images/img1.jpg"/>-->
         <div class="content">
-                {{ entry.content|safe }}
+                {{ (entry.fragment)|safe|html2text }}...
 
         </div>
         <div class="extra">
-            <div class="info">By Admin on {{ entry.create_time.strftime("%Y-%m-%d") }} - <a href="#">01 Commnets</a></div>
-            <div class="more"><a class="button" href="#">Read more >></a></div>
+            <div class="info">
+                By Admin on {{ entry.create_time.strftime("%Y-%m-%d") }} -
+                <a href="{{ url_for('show_entry', entry_id=entry.id) }}">
+                    <span class="ds-thread-count" data-thread-key="{{ entry.id }}" data-count-type="comments"></span>
+                </a>
+            </div>
+            <div class="more"><a class="button" href="{{ url_for('show_entry', entry_id=entry.id) }}">Read more >></a></div>
             <div class="clear"></div>
         </div>
     </article>

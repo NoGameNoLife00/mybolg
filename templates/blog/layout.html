@@ -6,22 +6,22 @@
 <head>
 	<!--  Page Needs -->
 	<meta charset="utf-8">
-	<title>NoGameNoLife的博客</title>
-	<meta name="description" content="">
-	<meta name="author" content="">
-	
+    {% block head %}
+    {% endblock %}
+
 	<!-- Mobile Specific Meta -->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     <!-- BootStrap -->
-    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/3.0.0/css/font-awesome.min.css">
 	<!-- CSS -->
 	<link rel="stylesheet" href="/static/css/zerogrid.css">
 	<link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="/static/css/responsive.css">
 
 
-
+    <link href='static/images/logo.png' rel='icon' type='image/x-icon'/>
     <!--[if lt IE 8]>
        <div style=' clear: both; text-align:center; position: relative;'>
          <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
@@ -39,7 +39,7 @@
 	<!-- Header -->
 	<header>
 		<div class="wrap-header zerogrid">
-			<div id="logo"><a href="{{ url_for('show_blog') }}"><img src="/static/images/newlogo2.png"/></a></div>
+			<div id="logo"><a href="{{ url_for('show_blog') }}"><img src="/static/images/newlogo.png"/></a></div>
 			<nav>
 				<div class="wrap-nav">
 					<div class="menu">
@@ -55,17 +55,6 @@
 		</div>
 	</header>
 <!-- Content -->
-<!--{% with message = get_flashed_messages() %}-->
-        <!--{% if messages %}-->
-        <!--<ul>-->
-            <!--{% for message in messages %}-->
-            <!--<li>{{ message }} </li>-->
-            <!--{% endfor %}-->
-        <!--</ul>-->
-        <!--{% endif %}-->
-        <!--{% endwith %}-->
-
-
 <section id="content">
 	<div class="wrap-content zerogrid">
 		<div class="row block">
@@ -98,7 +87,7 @@
 						<div class="heading"><h4 class="title">标签</h4></div>
 						<ul class="nav nav-pills">
                             {%  for tag in tags %}
-                                <li role="presentation"><a href="#">{{ tag.name|safe }}</a> </li>
+                                <li role="presentation"><a href="{{ url_for('show_tag', tag_id=tag.id) }}">{{ tag.name|safe }}</a> </li>
                             {% endfor %}
                         </ul>
 					</div>
@@ -139,7 +128,6 @@
                             <p>website: <a href="http://weibo.com/NoGameNoLife00">新浪微博</a></p>
                             <p>E-mail: NoGameNo_Life@163.com</p>
                             <p></p>
-							<!-- <a href="#"><img src="images/img5.jpg" width="120"/></a><a href="#"><img src="images/img4.jpg" width="120"/></a><a href="#"><img src="images/img3.jpg" width="120"/></a><a href="#"><img src="images/img2.jpg" width="120"/></a><a href="#"><img src="images/img1.jpg" width="120"/></a><a href="#"><img src="images/img4.jpg" width="120"/></a> -->
 						</div>
 					</div>
 				</div>
@@ -149,8 +137,6 @@
 					<div class="box">
 						<div class="heading"><h4 class="title">About Us</h4></div>
 						<div class="content">
-							<!-- <a href="#" target="_blank"><img src="images/zerotheme.png" style="border: 0px; margin: 10px 0;"/></a> -->
-							<!-- <p><a href="#" target="_blank">Free Html5 Templates</a> created by <a href="#">Zerotheme</a>. You can use and modify the template for both personal and commercial use. You must keep all copyright information and credit links in the template and associated files.</p> -->
 						</div>
 					</div>
 				</div>
@@ -160,7 +146,9 @@
 					<div class="box">
 						<div class="heading"><h4 class="title">友情链接</h4></div>
 						<div class="content">
-
+                            {% for link in links %}
+                            <p><a href="{{ link.link }}" target="_blank">{{ link.name }}</a></p>
+                            {% endfor %}
 						</div>
 					</div>
 				</div>
@@ -168,15 +156,14 @@
 		</div>
 	</div>
 	<div class="copyright">
-        <p>Copyright © 2012 - 2015 by NoGameNoLife's blog </p>
-		 <!--<p >Copyright © 2012 - More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a></p>-->
+        <p>Copyright © 2012 - 2015</p>
 	</div>
 </footer>
 
 </div>
 <!--JavaScript-->
 <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
-<script src="/static/js/bootstrap.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
 var duoshuoQuery = {short_name:"nogamenolife"};

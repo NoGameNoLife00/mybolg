@@ -1,47 +1,46 @@
  #encoding=utf-8
 from datetime import datetime
 from flask.ext.sqlalchemy import SQLAlchemy
-from blogapp import app
+from flask.ext.login import UserMixin
+from blogapp import db
 from hashlib import md5
 
-db = SQLAlchemy(app)
+
 
 ROLE_ADMIN = 1
 ROLE_USER = 2
 
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
-    nickname = db.Column(db.String(80), index=True, unique=True)
-    email = db.Column(db.String(120), index=True, unique=True)
-    role = db.Column(db.SmallInteger, default=ROLE_USER)
+    login = db.Column(db.String(80), unique=True)
+    nickname = db.Column(db.String(80), unique=True)
+    password = db.Column(db.String(64), unique=True)
+    email = db.Column(db.String(120), unique=True)
+    role = db.Column(db.SmallInteger, default=ROLE_ADMIN)
     entry = db.relationship('Entry', backref='author', lazy='dynamic')
     about_me = db.Column(db.String(250))
     last_seen = db.Column(db.DateTime)
 
-    #
-    # def is_authenticated(self):
-    # #   是否通过认证
-    #     return True
+
+    # Flask-Login integration
+    def is_authenticated(self):
+        return True
 
     def is_active(self):
-    #   是否有效
         return True
-    # def is_anonymous(self):
-    # #   是否匿名
-    #     return False
 
-    # def avatar(self, size):
-    # #   用户头像
-    #     return 'http://www.gravatar.com/avatar/' + \
-    #            md5(self.email).hexdigest() + '?d=mm&s=' + str(size)
+    def is_anonymous(self):
+        return False
 
+    def get_id(self):
+        return self.id
 
     def get_id(self):
         return unicode(self.id)
 
 
-    #防止昵称相同
+    # avoid nickname repeat
     @staticmethod
     def make_unique_nickname(nickname):
         if User.query.filter_by(nickname=nickname).first() == None:
@@ -53,7 +52,6 @@ class User(db.Model):
                 break
             virsion += 1
         return new_nickname
-
 
     def __repr__(self):
         return '<User %r>' % self.nickname
@@ -90,9 +88,10 @@ class Entry(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100))
     content = db.Column(db.Text)
-    status = db.Column(db.Integer, default=1) #完成：1, 失败0, 草稿:-1
-    create_time = db.Column(db.DateTime, default=datetime.now())
-    modified_time = db.Column(db.DateTime, default=datetime.now())
+    fragment = db.Column(db.Text) #entry's brief introduction
+    status = db.Column(db.Integer, default=1) #（temporary useless）
+    create_time = db.Column(db.DateTime, index=True, default=datetime.now())
+    modified_time = db.Column(db.DateTime, default=datetime.now()) #（temporary useless）
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     category = db.relationship('Category', backref=db.backref('entries', lazy='dynamic'), lazy='select')
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
@@ -104,6 +103,17 @@ class Entry(db.Model):
 
     def __unicode__(self):
         return self.title
+
+
+class Friend_link(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80))
+    link = db.Column(db.String(120))
+    def __repr__(self):
+        return '<Friend link %r>' % self.name
+
+    def __unicode__(self):
+        return self.name
 
 
 if __name__ == '__main__':

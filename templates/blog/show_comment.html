@@ -1,7 +1,15 @@
 {% extends "blog/layout.html" %}
+
+{% block head %}
+	<title>留言板 |NoGameNoLife的博客</title>
+	<meta name="description" content="NoGameNoLife的博客, C/C++,C#,Python,web,算法">
+	<meta name="author" content="NoGameNoLife">
+	<meta name="keywords" content="blog, 留言, NoGameNoLife">
+{% endblock %}
+
 {% block body %}
 <!-- 多说评论框 start -->
-<div class="ds-thread" data-thread-key="0" data-title="留言板" data-url="{{ url_for('show_comment')}}">
+<div class="ds-thread" data-thread-key="0" data-title="留言板" data-url="http://bugcoding.sinaapp.com/comment">
 
 </div>
 <!-- 多说评论框 end -->

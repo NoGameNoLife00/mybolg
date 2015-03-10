@@ -4,13 +4,13 @@ import os
 import sys
 absolute_path = os.path.abspath(__file__)
 app_path = os.path.dirname(absolute_path)
-path = os.path.join(app_path, 'virtualenv.bundle')
+path = os.path.join(app_path, 'libs')
 sys.path.insert(0, path)
 sys.path.insert(0, app_path)
 
 
 from flask import Flask
-#from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.sqlalchemy import SQLAlchemy
 # from flask.ext.login import LoginManager
 # from flask.ext.openid import OpenID
 # from config import basedir
@@ -19,14 +19,11 @@ from flask import Flask
 
 app = Flask(__name__)
 app.config.from_object('config')
+db = SQLAlchemy(app)
 from admin import *
-#Login
-# lm = LoginManager()
-# lm.init_app(app)
-# lm.login_view = 'login'
-# oid = OpenID(app, os.path.join(basedir, 'tmp'))
 
-#邮件系统
+
+#email setion
 from config import ADMINS, MAIL_PASSWORD, MAIL_PORT, MAIL_SERVER, MAIL_USERNAME
 
 if not app.debug:
@@ -40,7 +37,10 @@ if not app.debug:
     mail_handler.setLevel(logging.ERROR)
     app.logger.addHandler(mail_handler)
 
-#日志
+from flask.ext.mail import Mail
+mail = Mail(app)
+
+日志
 if not app.debug:
     import logging
     from logging.handlers import  RotatingFileHandler
@@ -52,8 +52,7 @@ if not app.debug:
 
 
 from view import *
-from data_model import *
 
-if __name__ == '__main__':
-    db.create_all()
+
+if  __name__ == '__main__':
     app.run(host='0.0.0.0', port=5005)

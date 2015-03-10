@@ -1,14 +1,43 @@
 {% extends 'admin/master.html' %}
 {% block body %}
-<!--{{ super() }}-->
-<div class="row">
-    <div class="span10 offset1">
-        <h1>NoGameNoLife的blog后台</h1>
-        <h1>基本功能</h1>
-            <p>1.博文管理：添加,修改,删除文章</p>
-            <p>2....</p>>
-            <p><a href="{{ url_for('admin_create_entry') }}">创建新的文章</a></p>
+{{ super() }}
+<div class="row-fluid">
+
+    <div>
+        {% if current_user.is_authenticated() %}
+        <h1>Blog 后台系统</h1>
+        <div class="row">
+            <div class="span10 offset1">
+                <h1>基本功能</h1>
+                    <p>1.博文管理：添加,修改,删除文章</p>
+                    <p>2....</p>>
+                    <p><a href="{{ url_for('admin_create_entry') }}" target="_blank">创建新的文章</a></p>
+            </div>
+        </div>
+        {% else %}
+        <form method="POST" action="">
+            {{ form.hidden_tag() if form.hidden_tag }}
+            {% for f in form if f.type != 'CSRFTokenField' %}
+            <div>
+            {{ f.label }}
+            {{ f }}
+            {% if f.errors %}
+            <ul>
+                {% for e in f.errors %}
+                <li>{{ e }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            </div>
+            {% endfor %}
+            <button class="btn" type="submit">Submit</button>
+        </form>
+        {{ link | safe }}
+        {% endif %}
     </div>
+
+    <a class="btn btn-primary" href="/"><i class="icon-arrow-left icon-white"></i> Back</a>
 </div>
-{% endblock %}
+
+{% endblock body %}
 
