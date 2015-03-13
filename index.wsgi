@@ -9,6 +9,5 @@ sys.path.insert(0, app_path)
 import sae
 from blogapp import app, db
 
-db.create_all()
 application = sae.create_wsgi_app(app)
 

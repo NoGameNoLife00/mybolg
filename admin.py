@@ -6,14 +6,11 @@ from flask.ext.admin.contrib.sqla import ModelView
 from flask.ext.admin.base import AdminIndexView
 from wtforms import fields, widgets
 from werkzeug.security import generate_password_hash
-
 from blogapp import app, db
-# from data_model import *
 from data_model import Tag, User, Category, Entry, Friend_link
 from forms import *
-# from forms import LoginForm, RegistrationForm, init_login
 from config import REGISTRATION_CODE
-# from flask.ext.admin.contrib.fileadmin import FileAdmin
+from flask.ext.admin.contrib.fileadmin import FileAdmin
 import os.path as op
 
 
@@ -28,6 +25,38 @@ class CKTextAreaWidget(widgets.TextArea):
 class CKTextAreaField(fields.TextField):
     widget = CKTextAreaWidget()
 
+
+class EntryAdmin(ModelView):
+
+    form_overrides = dict(content=CKTextAreaField)
+
+    create_template = 'admin/create.html'
+    edit_template = 'admin/edit.html'
+    # Visible columns in the list view
+    column_exclude_list = ['content', 'status', 'modified_time', 'author']
+    # List of columns that can be sorted. For 'user' column, use User.username as
+    column_sortable_list = ('category', 'create_time')
+    # Rename 'title' columns to 'Post Title' in list view
+    column_labels = dict(title='Entry Title')
+
+    column_searchable_list = ('title', User.nickname)
+
+    column_filters = ('title', 'create_time', 'category')
+
+    def __init__(self, session):
+        super(EntryAdmin, self).__init__(Entry, db.session)
+
+    def is_accessible(self):
+        return current_user.is_authenticated()
+
+class UserAdmin(ModelView):
+    column_exclude_list = ['password', 'Role']
+
+    def __init__(self, session):
+        super(UserAdmin, self).__init__(User, db.session)
+
+    def is_accessible(self):
+        return current_user.is_authenticated()
 
 class MyAdminView(ModelView):
 
@@ -98,9 +127,10 @@ admin = Admin(app, url='/blog/admin', index_view=MyAdminIndexView(), base_templa
 
 admin.add_view(MyAdminView(Category, db.session))
 admin.add_view(MyAdminView(Tag, db.session))
-admin.add_view(MyAdminView(Entry, db.session))
-admin.add_view(MyAdminView(User, db.session))
+admin.add_view(EntryAdmin(db.session))
+admin.add_view(UserAdmin(db.session))
 admin.add_view(MyAdminView(Friend_link, db.session))
+
 # file manage
-# path = op.join(op.dirname(__file__), 'static')
-# admin.add_view(FileAdmin(path, '/static/', name='Static Files'))
+path = op.join(op.dirname(__file__), 'static')
+admin.add_view(FileAdmin(path, '/static/', name='Static Files'))

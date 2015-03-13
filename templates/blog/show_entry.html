@@ -14,7 +14,7 @@
     <li><a href="{{ url_for('show_category', category_id=entry.category_id) }}">{{ entry.category.name }}</a> </li>
     <li><small>{{ entry.create_time.strftime("%Y-%m-%d") }}</small></li>
 <div class="page-header">
-    <h1><a href="{{ url_for('show_entry', entry_id=entry.id) }}">{{ entry.title }}</a></h1>
+    <h1 style="text-transform:none;" ><a href="{{ url_for('show_entry', entry_id=entry.id) }}">{{ entry.title }}</a></h1>
 </div>
 
 </ol>
@@ -28,6 +28,22 @@
     <li class="next"><a href="{{ url_for('next_entry', entry_id=entry.id) }}">下一篇 <span aria-hidden="true">&rarr;</span></a></li>
   </ul>
 </nav>
+
+<div class="ds-share flat" data-thread-key="{{ entry.id }}" data-title="{{ entry.title }}" data-images="" data-content="{{ entry.fragment }}" data-url="http://bugcoding.sinaapp.com/entry/{{entry.id}}">
+    <div class="ds-share-inline">
+      <ul  class="ds-share-icons-16">
+      	
+      	<li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+        <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+        <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+        <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+        <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+      	
+      </ul>
+      <div class="ds-share-icons-more">
+      </div>
+    </div>
+ </div>
 
 <!-- 多说评论框 start -->
 <div class="ds-thread" data-thread-key="{{ entry.id }}" data-title="{{ entry.title }}" data-url="http://bugcoding.sinaapp.com/entry/{{entry.id}}">

@@ -3,7 +3,7 @@
 from data_model import User, Tag, Entry, Category, Friend_link, tag_entry
 from blogapp import db
 
-# data wrappers
+
 class DataWrappers(object):
 
     def get_all_entries(self):
@@ -11,7 +11,7 @@ class DataWrappers(object):
 
     def create_entry(self, title, content, tag, category):
         ent = Entry(title=title, content=content, category_id=category, create_time=datetime.now())
-        # retrieval tag whether exist. if not exist then create
+        #查找tag是否存在,并加入tags，如果不存在则创建tag
         tag_list = tag_entry.split()
         for tag_name in tag_list:
             t = db.session.query(Tag).filter(Tag.name == tag_name).first()

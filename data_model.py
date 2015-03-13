@@ -11,6 +11,7 @@ ROLE_ADMIN = 1
 ROLE_USER = 2
 
 
+# 用户
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     login = db.Column(db.String(80), unique=True)
@@ -40,18 +41,18 @@ class User(db.Model, UserMixin):
         return unicode(self.id)
 
 
-    # avoid nickname repeat
-    @staticmethod
-    def make_unique_nickname(nickname):
-        if User.query.filter_by(nickname=nickname).first() == None:
-            return nickname
-        virsion = 2
-        while True:
-            new_nickname = nickname + str(virsion)
-            if User.query.filter_by(nickname=new_nickname).first() == None:
-                break
-            virsion += 1
-        return new_nickname
+    # #防止昵称相同
+    # @staticmethod
+    # def make_unique_nickname(nickname):
+    #     if User.query.filter_by(nickname=nickname).first() == None:
+    #         return nickname
+    #     virsion = 2
+    #     while True:
+    #         new_nickname = nickname + str(virsion)
+    #         if User.query.filter_by(nickname=new_nickname).first() == None:
+    #             break
+    #         virsion += 1
+    #     return new_nickname
 
     def __repr__(self):
         return '<User %r>' % self.nickname
@@ -60,6 +61,7 @@ class User(db.Model, UserMixin):
         return self.nickname
 
 
+# 分类
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True)
@@ -71,6 +73,7 @@ class Category(db.Model):
         return self.name
 
 
+# 标签
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True)
@@ -84,14 +87,15 @@ tag_entry = db.Table('tags',
                 )
 
 
+# 文章
 class Entry(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100))
     content = db.Column(db.Text)
-    fragment = db.Column(db.Text) #entry's brief introduction
-    status = db.Column(db.Integer, default=1) #（temporary useless）
+    fragment = db.Column(db.Text) #内容片段, 用于主页显示
+    status = db.Column(db.Integer, default=1) #完成：1, 失败0, 草稿:-1  （暂时无用）
     create_time = db.Column(db.DateTime, index=True, default=datetime.now())
-    modified_time = db.Column(db.DateTime, default=datetime.now()) #（temporary useless）
+    modified_time = db.Column(db.DateTime, default=datetime.now())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     category = db.relationship('Category', backref=db.backref('entries', lazy='dynamic'), lazy='select')
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
@@ -105,6 +109,7 @@ class Entry(db.Model):
         return self.title
 
 
+# 友链
 class Friend_link(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80))
