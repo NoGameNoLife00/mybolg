@@ -20,7 +20,7 @@
 {% for category in categories %}
     <div class="last-group" style="margin-bottom:20px;">
         <a href="#" class="list-group-item active">
-            <h3 class="list-group-item-heading" style="text-align:center">{{ category.name }}<span class="badge">{{ counts.pop(0) }}</span></h3>
+            <h3 class="list-group-item-heading" style="text-align:center; text-transform:none;">{{ category.name }}<span class="badge">{{ counts.pop(0) }}</span></h3>
         </a>
     <!--<h1><span class="label label-success">{{ category.name }}</span></h1>-->
         {% for entry in category.entries[:5] %}
