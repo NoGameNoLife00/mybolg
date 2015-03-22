@@ -9,7 +9,7 @@ import os
 DEBUG = False
 CSRF_ENABLED = True
 SECRET_KEY = 'you-guess'
-REGISTRATION_CODE = 'woshichentao'
+REGISTRATION_CODE = 'zhuchema'
 POST_PRE_PAGE = 8
 # MYSQL Setting
 basedir = os.path.abspath(os.path.dirname(__file__))
