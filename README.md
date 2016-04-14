@@ -1,4 +1,4 @@
-# mybolg
+# myblog
 本blog系统后端使用python编写，基于flask框架+mysql数据库，前端html5+bootstrap。目前这个blog部署在SAE（新浪云）上面。
 
 基本功能：
