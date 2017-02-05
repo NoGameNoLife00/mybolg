@@ -132,5 +132,5 @@ admin.add_view(UserAdmin(db.session))
 admin.add_view(MyAdminView(Friend_link, db.session))
 
 # file manage
-path = op.join(op.dirname(__file__), 'static')
-admin.add_view(FileAdmin(path, '/static/', name='Static Files'))
+# path = op.join(op.dirname(__file__), 'static')
+# admin.add_view(FileAdmin(path, '/static/', name='Static Files'))
