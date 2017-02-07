@@ -1,5 +1,5 @@
 # myblog
-本blog系统后端使用python编写，基于flask框架+mysql数据库，前端html5+bootstrap。目前这个blog部署在SAE（新浪云）上面。
+本blog系统后端使用python编写，基于flask框架+mysql数据库，前端html5+bootstrap。
 
 基本功能：
 ---------
@@ -7,8 +7,9 @@
 
 演示地址：[NoGameNoLife's Blog](http://bugcoding.com)
 
+腾讯云部署：http://bugcoding.com/entry/14
 
-使用SAE：
+SAE部署：
 ----------------
 1.申请 SAE 开发账号, 创建Python Web应用
 
@@ -47,27 +48,22 @@
 
 更多操作可以查看文档：[多说](http://dev.duoshuo.com/docs)
 
-
 运行环境和第三方依赖库:
 ------------
 python = 2.7
 
-flask = 0.10.1
+Flask = 0.10.1
 
-flask-SQLAlchemy = 2.0
+Flask-SQLAlchemy = 2.0
 
-flask-Admin = 1.0.3
+Flask-Admin = 1.1.0
 
-flask-Login = 0.2.11
+Flask-Login = 0.2.11
 
-flask-Mail = 0.1
+Flask-WTF = 0.11
 
-flask-Login = 0.2.11
+Sqlalchemy = 0.9.8
 
-flask-WTF = 0.11
+Sqlalchemy-migrate = 0.9.4
 
-sqlalchemy = 0.9.8
-
-sqlalchemy-migrate = 0.10.1
-
-wtforms = 2.0.2
+Wtforms = 2.0.2
