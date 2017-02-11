@@ -1,0 +1,9 @@
+{% if config.ARTICLE_EDITOR == 'ckeditor' %}
+    <script src="/static/ckeditor/ckeditor.js"></script>
+{% elif config.ARTICLE_EDITOR == 'simplemde' %}
+    <link rel="stylesheet" href="/static/simplemde/simplemde.min.css">
+    <script src="/static/simplemde/simplemde.min.js"></script>
+    <script>
+    var simplemde = new SimpleMDE({ element: document.getElementById("content") });
+    </script>
+{% endif %}

@@ -38,17 +38,16 @@ class DataWrappers(object):
 
         return counts
 
-
     def increase_view_count(self, entry, num):
         entry.view_count += num
         db.session.commit()
         return None
 
-    def get_entries_by_page(self, page, par_page):
+    def get_articles_by_page(self, page, par_page):
         pages = Entry.query.order_by(Entry.create_time.desc()).paginate(page, par_page)
         return pages
 
-    def get_entry_by_id(self, id):
+    def get_article_by_id(self, id):
         ent = Entry.query.get(id)
         return ent
 

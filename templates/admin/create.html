@@ -2,6 +2,6 @@
 
 {% block tail %}
     {{ super() }}
-    <script src="/static/ckeditor/ckeditor.js"></script>
+    {% include 'admin/article_edit.html' %}
 
 {% endblock %}

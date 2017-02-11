@@ -5,6 +5,16 @@
 	<meta name="description" content="{{ entry.title }},NoGameNoLife的博客">
 	<meta name="author" content="NoGameNoLife">
 	<meta name="keywords" content="{{ entry.title }}, {{ entry.category.name }}">
+    <link rel="stylesheet" href="/static/css/github-markdown.css"/>
+    <style>
+        .markdown-body {
+            box-sizing: border-box;
+            min-width:200px;
+            max-width:980px;
+            margin:0 auto;
+            padding: 15px;
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
@@ -22,8 +32,12 @@
 <script src="/static/highlight/highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 
-<div class="well well-lg">
-    <p>{{ entry.content|safe}}</p>
+<div class="markdown-body">
+{% if entry.content_html %}
+{{ entry.content_html|safe}}
+{% else %}
+{{ entry.content|safe }}
+{% endif %}
 </div>
 
 <nav>

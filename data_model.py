@@ -4,11 +4,36 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import UserMixin
 from blogapp import db
 from hashlib import md5
+from flask import Markup
+import markdown
+import bleach
+import config
 
 
 
 ROLE_ADMIN = 1
 ROLE_USER = 2
+
+CONTENT_FORMAT = 'html'
+if config.ARTICLE_EDITOR == "simplemde":
+    CONTENT_FORMAT = 'markdown'
+
+
+# markdown 转换为 html
+def md2html(text, codehilte=False):
+    exts = [
+        'abbr', 'attr_list', 'def_list', 'sane_lists', 'fenced_code',
+        'tables', 'toc', 'wikilinks'
+    ]
+    if codehilte:
+        exts.append('codehilite(guess_lang=True,linenums=False)')
+
+    result_text = Markup(markdown.markdown(
+        text,
+        extensions=exts,
+        safe_mode=False,
+    ))
+    return result_text
 
 
 # 用户
@@ -92,6 +117,7 @@ class Entry(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100))
     content = db.Column(db.Text)
+    content_html = db.Column(db.Text)
     fragment = db.Column(db.Text) #内容片段, 用于主页显示
     status = db.Column(db.Integer, default=1) #完成：1, 失败0, 草稿:-1  （暂时无用）
     create_time = db.Column(db.DateTime, index=True, default=datetime.now())
@@ -102,11 +128,20 @@ class Entry(db.Model):
     tag = db.relationship('Tag', secondary=tag_entry, backref=db.backref('entries', lazy='dynamic'))
     view_count = db.Column(db.Integer, default=0)
 
+    @staticmethod
+    def on_changed_content(target, value, oldvalue, initator):
+        if CONTENT_FORMAT == 'html':
+            target.content_html = value
+        else:
+            target.content_html = md2html(text=value)
+
     def __repr__(self):
         return '<Entry %r>' % self.title
 
     def __unicode__(self):
         return self.title
+
+db.event.listen(Entry.content, 'set', Entry.on_changed_content)
 
 
 # 友链

@@ -1,7 +1,7 @@
-{% extends 'admin/model/create.html' %}
+{% extends 'admin/model/edit.html' %}
 
 {% block tail %}
     {{ super() }}
-    <script src="/static/ckeditor/ckeditor.js"></script>
+    {% include 'admin/article_edit.html' %}
 
 {% endblock %}

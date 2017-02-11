@@ -4,36 +4,31 @@ from flask.ext.login import current_user, login_user, logout_user
 from flask.ext.admin import Admin, BaseView, expose, helpers
 from flask.ext.admin.contrib.sqla import ModelView
 from flask.ext.admin.base import AdminIndexView
-from wtforms import fields, widgets
 from werkzeug.security import generate_password_hash
 from blogapp import app, db
 from data_model import Tag, User, Category, Entry, Friend_link
 from forms import *
-from config import REGISTRATION_CODE
+from config import REGISTRATION_CODE, ARTICLE_EDITOR
+from widgets import SimpleMDEAreaField, CKTextAreaField
 from flask.ext.admin.contrib.fileadmin import FileAdmin
 import os.path as op
 
-
-# Define wtforms widget and field
-class CKTextAreaWidget(widgets.TextArea):
-
-    def __call__(self, field, **kwargs):
-        kwargs.setdefault('class_', 'ckeditor')
-        return super(CKTextAreaWidget, self).__call__(field, **kwargs)
-
-
-class CKTextAreaField(fields.TextField):
-    widget = CKTextAreaWidget()
+if ARTICLE_EDITOR == "ckeditor":
+    EDITOR_WIDGET = CKTextAreaField
+else:
+    EDITOR_WIDGET = SimpleMDEAreaField
 
 
 class EntryAdmin(ModelView):
-
-    form_overrides = dict(content=CKTextAreaField)
-
     create_template = 'admin/create.html'
     edit_template = 'admin/edit.html'
+
+    form_overrides = dict(content=EDITOR_WIDGET)
     # Visible columns in the list view
     column_exclude_list = ['content', 'status', 'modified_time', 'author']
+
+    form_excluded_columns = ('content_html',)
+
     # List of columns that can be sorted. For 'user' column, use User.username as
     column_sortable_list = ('category', 'create_time')
     # Rename 'title' columns to 'Post Title' in list view
@@ -49,6 +44,7 @@ class EntryAdmin(ModelView):
     def is_accessible(self):
         return current_user.is_authenticated()
 
+
 class UserAdmin(ModelView):
     column_exclude_list = ['password', 'Role']
 
@@ -58,9 +54,10 @@ class UserAdmin(ModelView):
     def is_accessible(self):
         return current_user.is_authenticated()
 
+
 class MyAdminView(ModelView):
 
-    form_overrides = dict(content=CKTextAreaField)
+    form_overrides = dict(content=EDITOR_WIDGET)
 
     create_template = 'admin/create.html'
     edit_template = 'admin/edit.html'
