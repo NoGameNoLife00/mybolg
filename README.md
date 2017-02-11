@@ -3,7 +3,7 @@
 
 基本功能：
 ---------
-支持后台管理与登录，管理文章，分类，标签，用户，文件，友链等
+支持后台管理与登录，管理文章，分类，标签，用户，文件，友链等，支持富文本编辑器或markdown编辑器进行文章编辑
 
 演示地址：[NoGameNoLife's Blog](http://bugcoding.com)
 
@@ -26,7 +26,9 @@ SAE部署：
 
 邮箱配置：输入使用的服务器地址，端口和账号，密码
 
-开启调试模式：DEBUG = Ture
+开启调试模式：DEBUG = Ture(正式运行时请关闭）
+
+配置文章编辑器：ARTICLE_EDITOR = 'simplemde' 或者 ARTICLE_EDITOR = 'ckeditor' #使用Simplemde markdown编辑器或者ckeditor富文本编辑器
 
 配置注册码（注册账号时需要使用）：REGISTRATION_CODE
 
