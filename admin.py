@@ -25,7 +25,7 @@ class EntryAdmin(ModelView):
 
     form_overrides = dict(content=EDITOR_WIDGET)
     # Visible columns in the list view
-    column_exclude_list = ['content', 'status', 'modified_time', 'author']
+    column_exclude_list = ['content', 'content_html', 'status', 'modified_time', 'author']
 
     form_excluded_columns = ('content_html',)
 

@@ -33,11 +33,14 @@
 <script>hljs.initHighlightingOnLoad();</script>
 
 <div class="markdown-body">
-{% if entry.content_html %}
-{{ entry.content_html|safe}}
-{% else %}
-{{ entry.content|safe }}
-{% endif %}
+    {% if entry.content_html %}
+    {{ entry.content_html|safe}}
+    {% else %}
+    {{ entry.content|safe }}
+    {% endif %}
+    <br>
+    <p>本文链接: <a href="http://bugcoding.com/entry/{{entry.id}}">http://www.bugcoding.com/entry/{{ entry.id }}</a></p>
+    <p>版权所有。转载时必须以链接形式注明作者和原始出处及本声明。</p>
 </div>
 
 <nav>
